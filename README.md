@@ -122,13 +122,14 @@ throws an error if no job with the given number exists.
   ```
 <tux@linux:~> sig 2 9
 # sends SIGKILL (signal number 9) to the process firefox (job # list as per the previous example), causing it to terminate
-    ```
+  ```
   
  - `fg` : Brings the running or stopped background job corresponding to job number to the foreground, and changes its state to running.The shell throws an
 error if no job with the given job number exists.
   
   Example:
-  ```<tux@linux:~> fg 4
+  ```
+<tux@linux:~> fg 4
 # brings [4] gedit to the foreground
   ```
  
