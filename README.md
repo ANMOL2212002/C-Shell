@@ -75,11 +75,13 @@ command. This implies thatshell will spawn that process and doesn't wait for the
  - `pinfo` : prints the process-related info of shell program.
  - `pinfo <pid>` : prints the process info about the given PID.
   
-  ```<Name@UBUNTU:~>pinfo 7777
+```
+<Name@UBUNTU:~>pinfo 7777
 pid -- 7777
 Process Status -- {R/S/S+/Z}
 memory -- 123456 {Virtual Memory}
-Executable Path -- /usr/bin/gcc```
+Executable Path -- /usr/bin/gcc 
+```
   
  Process status codes:
 1. R/R+: Running
@@ -88,9 +90,70 @@ Executable Path -- /usr/bin/gcc```
 4. T: Stopped (on a signal)
 
  Note: “+” implies that the process is in the foreground
-  
  
+ ### 5. Finished background processes:
+  If the background process exits then the shell displays the appropriate message to the user.
+ 
+ ### 6. Repeat command(for foreground proccesses):
+`repeat` command is responsible for executing the given
+instruction multiple times. The first argument to the command specifies the number of
+times the following command is to be run.
 
+### 7. Input/Output Redirection:
+Using the symbols `<`, `>` and `>>`, the output of commands, usually written to stdout, can be redirected to another file, or the input taken from a file other than stdin. Both
+input and output redirection can be used simultaneously
+  
+### 8. Command Pipelines:
+ A pipe, identified by |, redirects the output of the command on the left as input to the command on the right. C-Shell is able to support any number of pipes.
+  
+### 9. I/O Redirection within Command Pipelines:
+  C-Shell is able to handle input/output redirection within command pipelines. 
+
+### 10. User-defined commands:
+  
+ - `jobs`: This command prints a list of all currently running background processes spawned by the shell in alphabetical order of the command name, along with
+their job number (a sequential number assigned by your shell), process ID and their state, which can either be running or stopped. There may be flags specified
+as well. If the flag specified is -r, then print only the running processes else if the flag is -s then print the stopped processes only.
+  
+ - `sig` : Takes the job number (assigned by shell) of a running job and sends the signal corresponding to signal number to that process. The shell 
+throws an error if no job with the given number exists.
+  
+  Example 
+  ```
+<tux@linux:~> sig 2 9
+# sends SIGKILL (signal number 9) to the process firefox (job # list as per the previous example), causing it to terminate
+    ```
+  
+ - `fg` : Brings the running or stopped background job corresponding to job number to the foreground, and changes its state to running.The shell throws an
+error if no job with the given job number exists.
+  
+  Example:
+  ```<tux@linux:~> fg 4
+# brings [4] gedit to the foreground
+  ```
+ 
+  
+  - `bg`: Changes the state of a stopped background job to running (in the background). The shell should throwserror if no background job corresponding to the given job number exists, and do nothing if the job is already running in the background.
+  
+  ### 11. Replay command:
+  `replay`: executes a particular command in fixed time interval for a certain period
+  
+  Example:
+  ```<Name@UBUNTU:~> replay -command echo "hi" -interval 3 -period 6```
+  
+  ### 12. Signal Handling:
+  1. `CTRL-Z`:
+It pushes any currently running foreground job into the background, and changes its state from running to stopped. This has no effect on the
+shell if there is no foreground process running.
+  
+2. `CTRL-C`:
+  It interrepts any currently running foreground job, by sending it the SIGINT signal. This has no effect on the shell if there is no foreground
+process running.
+  
+3. `CTRL-D`:
+  It logs you out of shell, without having any effect on the actual terminal.
+
+  
 ## Shell files:
 
 - ### header.h:
